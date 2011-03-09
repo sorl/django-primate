@@ -68,7 +68,7 @@ example on how to do this.
 
 ``settings.py``::
 
-    ``AUTH_USER_MODEL = 'profiles.models.CustomUser'``
+    ``AUTH_USER_MODEL = 'users.models.CustomUser'``
 
 
 Now you can import this model by ``from django.contrib.auth.models import
