@@ -114,10 +114,15 @@ What's new in the default user model?
 I have made some minor changes:
 
 1. Removed ``first_name`` and ``last_name``
+
 2. Added ``name``
+
 3. ``username`` is now max 50 chars
-3. Made ``email`` unique
-4. ``get_profile`` method just returns self
+
+4. Made ``email`` unique
+
+5. ``get_profile`` method just returns self
+
 
 As stated earlier, you can now change all this, remove add and override fields
 in your user model.
