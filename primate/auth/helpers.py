@@ -1,9 +1,9 @@
 import datetime
-from django.contrib import auth
 from django.contrib.auth.signals import user_logged_in
+from django.contrib import auth
+from django.utils.crypto import constant_time_compare
 from django.utils.encoding import smart_str
 from django.utils.hashcompat import md5_constructor, sha_constructor
-
 
 
 __all__ = ('SiteUserNotAvailable', 'get_hexdigest', 'check_password',
@@ -42,7 +42,7 @@ def check_password(raw_password, enc_password):
     encryption formats behind the scenes.
     """
     algo, salt, hsh = enc_password.split('$')
-    return hsh == get_hexdigest(algo, salt, raw_password)
+    return constant_time_compare(hsh, get_hexdigest(algo, salt, raw_password))
 
 
 def update_last_login(sender, user, **kwargs):
