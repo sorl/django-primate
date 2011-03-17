@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.admin.sites import site
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AdminPasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, AdminPasswordChangeForm
 from django.contrib.auth.models import Group
 from django.contrib import admin
 from django.contrib import messages
@@ -13,6 +13,7 @@ from django.utils.decorators import method_decorator
 from django.utils.html import escape
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
+from primate.auth.forms import UserChangeForm
 
 
 csrf_protect_m = method_decorator(csrf_protect)

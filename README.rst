@@ -53,7 +53,7 @@ Using
 -----
 After installing this patch you effectively have no User model at all. You have
 to create one on your own and define it in your settings. I will give you an
-example on how to do this.
+example on how to do this using the provided UserBase class.
 
 ``project/users/models.py``::
 
@@ -81,7 +81,7 @@ It's simple
 
 - To add a field just add a field to the model as you would normally.
 - To override a field just override the field name and it will be used instead
-  of the one defined in UserBase.
+  of the one defined in ``UserBase``.
 
 The overriding feature is something special not available in normal Django
 model abstract classes and is done in the custom metaclass. You can also remove
@@ -95,7 +95,7 @@ To make the admin work I have made the monkey patch ``primate.patch`` patch the
 ``admin.autodiscover`` so that it does not register the default admin class for
 ``django.contrib.auth.User``. This means that you will need to register that
 your self. The easiest way to do that is to first add ``users`` to your
-``INSTALLED_APPS`` and then add something like this to ``ùsers.admin``::
+``INSTALLED_APPS`` and then add something like this to ``ùsers/admin.py``::
 
     from primate.admin import UserAdminBase
     from django.contrib import admin
@@ -109,8 +109,8 @@ your self. The easiest way to do that is to first add ``users`` to your
     admin.site.register(User, UserAdmin)
 
 
-What's new in the default user model?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+What's now in ``UserBase`` compared to ``django.contrib.auth.models.User``?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 I have made some minor changes:
 
 1. Removed ``first_name`` and ``last_name``
@@ -143,4 +143,23 @@ So the time has come, just add this to your settings::
         'auth': 'users.migrations',
     }
 
+
+Alternative password hashing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SHA-1 is the default django hashing algorithm for passwords. Some may not agree
+that this is the best choice. ``django-primate`` makes it simple for you to use
+alternative hashing as you can just override the ``check_password`` and
+``set_password`` methods in your custom user model. Since bcrypt is a good
+choice there is a simple way for you to implement hashing using this::
+
+    ``project/users/models.py``::
+
+        from primate.models import UserBase, UserMeta, BcryptMixin
+        from django.db import models
+
+        class CustomUser(BcryptMixin, UserBase):
+            __metaclass__ = UserMeta
+
+
+Note that this will update all passwords on authorization success to use bcrypt.
 

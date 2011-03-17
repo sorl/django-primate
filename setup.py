@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-primate',
-    version='0.1',
+    version='0.1.1',
     description='A modular django user',
     long_description=open('README.rst').read(),
     author='Mikko Hellsing',
