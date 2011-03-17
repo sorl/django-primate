@@ -109,8 +109,8 @@ your self. The easiest way to do that is to first add ``users`` to your
     admin.site.register(User, UserAdmin)
 
 
-What's now in ``UserBase`` compared to ``django.contrib.auth.models.User``?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+What's new in UserBase compared to django.contrib.auth.models.User?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 I have made some minor changes:
 
 1. Removed ``first_name`` and ``last_name``
@@ -152,13 +152,13 @@ alternative hashing as you can just override the ``check_password`` and
 ``set_password`` methods in your custom user model. Since bcrypt is a good
 choice there is a simple way for you to implement hashing using this::
 
-    ``project/users/models.py``::
+    # project/users/models.py
 
-        from primate.models import UserBase, UserMeta, BcryptMixin
-        from django.db import models
+    from primate.models import UserBase, UserMeta, BcryptMixin
+    from django.db import models
 
-        class CustomUser(BcryptMixin, UserBase):
-            __metaclass__ = UserMeta
+    class CustomUser(BcryptMixin, UserBase):
+        __metaclass__ = UserMeta
 
 
 Note that this will update all passwords on authorization success to use bcrypt.
