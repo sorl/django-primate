@@ -17,7 +17,7 @@ First of all install the module by checking out the latest code or use pip::
 In order to monkey patch we need to do this early. I have created a small
 modified ``manage.py`` file that you can use for your development. This sets up
 your environment and right before you run your management command (such as
-`runserver``) we apply the patch. Copy this into your project and overwrite the
+``runserver``) we apply the patch. Copy this into your project and overwrite the
 default ``manage.py``::
 
     #!/usr/bin/env python
@@ -53,7 +53,7 @@ Using
 -----
 After installing this patch you effectively have no User model at all. You have
 to create one on your own and define it in your settings. I will give you an
-example on how to do this using the provided UserBase class.
+example on how to do this using the provided ``UserBase`` class.
 
 ``project/users/models.py``::
 
@@ -95,7 +95,7 @@ To make the admin work I have made the monkey patch ``primate.patch`` patch the
 ``admin.autodiscover`` so that it does not register the default admin class for
 ``django.contrib.auth.User``. This means that you will need to register that
 your self. The easiest way to do that is to first add ``users`` to your
-``INSTALLED_APPS`` and then add something like this to ``ùsers/admin.py``::
+``INSTALLED_APPS`` and then add something like this to ``users/admin.py``::
 
     from primate.admin import UserAdminBase
     from django.contrib import admin
@@ -130,12 +130,12 @@ in your user model.
 
 South
 ^^^^^
-I was worried, this is a major feature, luckely Andrew already thought of this:
-qoute from the documentation under ``SOUTH_MIGRATION_MODULES``:
+I was worried, this is a major feature, luckily Andrew already thought of this:
+quote from the documentation under ``SOUTH_MIGRATION_MODULES``:
 
 "Note that the keys in this dictionary are ‘app labels’, not the full paths to
 apps; for example, were I to provide a migrations directory for
-django.contrib.auth, I’d want to use auth as the key here."
+django.contrib.auth, I'd want to use auth as the key here."
 
 So the time has come, just add this to your settings::
 
